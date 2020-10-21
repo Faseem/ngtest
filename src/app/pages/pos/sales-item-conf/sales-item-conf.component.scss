@@ -1,0 +1,13 @@
+@import '../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  nb-card {
+    max-width: 600px;
+    max-height: 500px;
+  }
+}
+
+.table tr.active td{
+  background-color: #484848 !important;
+  color: white;
+}

@@ -1,0 +1,35 @@
+<div class="row">
+    <div class="col-md-9 col-9 m-0">
+        <div class="search-bar-input-wrapper" style="display: inline-block;">
+            <input *ngIf="callBackFn" class="form-control search-bar-text" id="searchText" #seachBarInput name="searchBarInput"
+            [(ngModel)]="selectedValue" [ngbTypeahead]="typeAheadSearch" [resultFormatter]="formatMatches"
+            [inputFormatter]="formatMatches" type="text" (keyup.enter)="searchByEnter($event)" (selectItem)="selectItem($event)" placeholder="{{placeHolder}}" style="display: inline-block;">
+
+            <input *ngIf="!callBackFn" class="form-control search-bar-text" id="searchText" #seachBarInputText name="seachBarInputText"
+            [(ngModel)]="selectedValue"  type="text" (keyup.enter)="searchByEnter($event)" (selectItem)="selectItem($event)" placeholder="{{placeHolder}}">
+
+            <span class="action-button p-0 m-0 hand-cursor" *ngIf="!useCallBackFn" (click)="search()">
+                <i class="material-icons">search</i>
+            </span>
+
+            <span class="action-button p-0 m-0 hand-cursor" *ngIf="useCallBackFn && searchPerformed" (click)="clear()">
+                <i class="material-icons">clear</i>
+            </span>
+
+        </div>
+    </div>
+
+    <div class="col-md-1 col-1 p-0 m-0" *ngIf="useCallBackFn && searching">
+        <i class="center-right-img fas fa-circle-notch fa-spin"></i>
+    </div>
+
+    <div *ngIf="clearSearch && (selectedValue != null && selectedValue != '')" class="col-lg-3">
+        <a>
+            <span 
+            class="clear-search"
+            (click)="clear()">CLEAR SEARCH
+            </span>
+        </a>
+    </div>
+
+</div>

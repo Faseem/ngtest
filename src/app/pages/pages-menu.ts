@@ -44,6 +44,28 @@ export const MENU_ITEMS: NbMenuItem[] = [
     ],
   },
   {
+    title: 'POS',
+    icon: 'layout-outline',
+    children: [
+      {
+        title: 'Inventry',
+        link: '/pages/POS/inventry', 
+      },
+      {
+        title: 'GRN',
+        link: '/pages/POS/grn',
+      },
+      {
+        title: 'Stock',
+        link: '/pages/POS/stock',
+      },
+      {
+        title: 'Reports',
+        link: '/pages/POS/report',
+      },
+    ],
+  },
+  {
     title: 'Forms',
     icon: 'edit-2-outline',
     children: [
@@ -219,28 +241,6 @@ export const MENU_ITEMS: NbMenuItem[] = [
       {
         title: '404',
         link: '/pages/miscellaneous/404',
-      },
-    ],
-  },
-  {
-    title: 'Auth',
-    icon: 'lock-outline',
-    children: [
-      {
-        title: 'Login',
-        link: '/auth/login',
-      },
-      {
-        title: 'Register',
-        link: '/auth/register',
-      },
-      {
-        title: 'Request Password',
-        link: '/auth/request-password',
-      },
-      {
-        title: 'Reset Password',
-        link: '/auth/reset-password',
       },
     ],
   },

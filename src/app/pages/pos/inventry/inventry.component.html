@@ -1,0 +1,57 @@
+<div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>Inline form</nb-card-header>
+        <nb-card-body>
+          <form class="form-inline">
+            <app-search-bar 
+            [placeHolder]="'SearchItems'" 
+            [displayField]="'itemName'" 
+            [callBackFn]="this.itemSearchFunction.bind(this)"
+            (valueChanged)="searchByText($event)"></app-search-bar>
+            <input type="text" nbInput fullWidth placeholder="Email">
+            <nb-checkbox>Remember me</nb-checkbox>
+            <button type="submit" nbButton status="primary">Submit</button>
+          </form>
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+      <nb-card class="inline-form-card">
+        <nb-card-header>Inline form</nb-card-header>
+        <nb-card-body>
+          <table>
+              <tr>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+                  <td>Apple</td>
+              </tr>
+              <tr>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+                <td>Apple</td>
+            </tr>
+          </table>
+          <app-data-pagination
+          *ngIf="totalElements>0"
+          [pageSize]="pageSize"
+          [collectionSize]="totalElements"
+          (paginationChanged)="paginationChanged($event)"
+          [showSizeSelection]="true"></app-data-pagination>
+        </nb-card-body>
+      </nb-card>
+    </div>
+</div>

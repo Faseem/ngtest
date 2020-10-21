@@ -5,12 +5,13 @@
  */
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './@core/core.module';
 import { ThemeModule } from './@theme/theme.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+//import { HttpModule } from '@angular/http';
 import {
   NbChatModule,
   NbDatepickerModule,
@@ -20,14 +21,20 @@ import {
   NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
+import { AppConfService } from './@core/utils/app-conf.service';
+import { KeycloakAngularModule, KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpXsrfInterceptor } from './@core/utils/httpXsrfInterceptor';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    KeycloakAngularModule,
     HttpClientModule,
     AppRoutingModule,
+    // HttpModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),
     NbDatepickerModule.forRoot(),
@@ -39,8 +46,27 @@ import {
     }),
     CoreModule.forRoot(),
     ThemeModule.forRoot(),
+    NgbModule,
+    //HttpClientXsrfModule.withOptions({cookieName: 'XSRF-TOKEN', headerName: 'X-XSRF-TOKEN'}),
   ],
   bootstrap: [AppComponent],
+  providers:[
+    AppConfService,
+    {
+      provide:APP_INITIALIZER,
+      useFactory:appInitializer,
+      deps:[AppConfService, KeycloakService],
+      multi:true
+    },
+    //{provide: HTTP_INTERCEPTORS, useClass: HttpXsrfInterceptor, multi:true}
+  ]
 })
 export class AppModule {
+}
+
+
+export function appInitializer(confService:AppConfService){
+  return ()=>{
+    confService.initializeApp();
+  }
 }

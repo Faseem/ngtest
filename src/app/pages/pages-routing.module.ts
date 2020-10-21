@@ -5,6 +5,8 @@ import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ECommerceComponent } from './e-commerce/e-commerce.component';
 import { NotFoundComponent } from './miscellaneous/not-found/not-found.component';
+import { AppConfService } from '../@core/utils/app-conf.service';
+import { AuthGuardService } from '../@core/utils';
 
 const routes: Routes = [{
   path: '',
@@ -22,6 +24,15 @@ const routes: Routes = [{
       path: 'layout',
       loadChildren: () => import('./layout/layout.module')
         .then(m => m.LayoutModule),
+    },
+    {
+      path: 'POS',
+      loadChildren: () => import('./pos/pos.module')
+        .then(m => m.PosModule),
+      data : {
+        roles:AppConfService.hardcoded?.roles?.pos
+      },
+      canActivate:[AuthGuardService]  
     },
     {
       path: 'forms',

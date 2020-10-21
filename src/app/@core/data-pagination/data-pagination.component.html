@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-md-8 pt-3 pl-0 pr-0">
+            <ngb-pagination [(page)] = "page" [pageSize]="pageSize" [collectionSize]="collectionSize" [maxSize]="3" (pageChange)="getPage($event)">
+            </ngb-pagination>
+        </div>
+        <div class="col-md-8 pt-3 pl-0 pr-0" *ngIf="showSizeSelection">
+            <span class="results">Results Per Page</span>
+            <div class="btn-group btn-group-toggle" ngbRadioGroup [(ngModel)]="pageSize" (ngModelChange)="loadForPage($event)">
+                <label ngbButtonLabel class="btn-light">
+                    <input ngbButton type="radio" [value]="15">15
+                </label><span class="divider">|</span>
+                <label ngbButtonLabel class="btn-light btn-middle">
+                    <input ngbButton type="radio" [value]="15">30
+                </label><span class="divider">|</span>
+                <label ngbButtonLabel class="btn-light">
+                    <input ngbButton type="radio" [value]="60">60
+                </label>
+            </div>
+        </div>
+    </div>
+</div>

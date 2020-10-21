@@ -1,0 +1,91 @@
+<nb-card>
+    <nb-card-header>{{itemDetail.itemName | uppercase }} - QTY :{{itemDetail.grnItemsSummary?.itemAvailableQty}} {{itemDetail.grnItemsSummary?.unitDto?.unitsCode}}</nb-card-header>
+    <nb-card-body>
+      <table class="table table-hover">
+        <tr>
+          <th>
+            GRN-Date
+          </th>
+          <th *ngIf="posClientConfig.showBuyingPriceInPopUp">
+            Buying Price
+          </th>
+          <th *ngIf="itemDetail.itemIsSoledBatchWise">
+            Selling Price
+          </th>
+          <th>
+            Total QTY
+          </th>
+          <th>
+            Sold
+          </th>
+          <th>
+            Balance QTY
+          </th>
+          <th *ngIf="itemDetail.itemIsSoledBatchWise">
+            Discounts
+          </th>
+        </tr>
+        <tr *ngFor="let grnItem of itemDetail.grnItemAvailableDtos; let i = index"
+            (click)=grnSelected(i,$event);
+            [class.active]="isGrnSelected(i)"
+        >
+          <td>
+            {{grnItem.grn?.grnCreatedDate}}
+          </td>
+          <td *ngIf="posClientConfig.showBuyingPriceInPopUp">
+            {{grnItem?.grnItemPerUnitBuyingPrice | currency : 'LKR' : 'symbol':'1.2-2'}}/{{grnItem.buyingUnit?.unitsCode}}
+          </td>
+          <td *ngIf="itemDetail.itemIsSoledBatchWise">
+            {{grnItem?.grnItemPrice?.pricePerUnit | currency : 'LKR' : 'symbol':'1.2-2'}}/{{grnItem.grnItemPrice?.grnItemPriceMeasuredUnit?.unitsCode}}
+          </td>
+          <td>
+            {{grnItem.grnItemQty | number: '1.2-2'}} {{grnItem.buyingUnit?.unitsCode}}
+          </td>
+          <td>
+            {{grnItem.soldQty | number: '1.2-2'}} {{grnItem.buyingUnit?.unitsCode}}
+          </td>
+          <td>
+            {{grnItem.availableQty | number: '1.2-2'}} {{grnItem.buyingUnit?.unitsCode}}
+          </td>
+          <td *ngIf="itemDetail.itemIsSoledBatchWise">
+            <div *ngFor ="let discount of grnItem?.grnItemDiscounts">
+              <nb-checkbox id="discount-{{discount.discountId}}"
+              status="success"
+              (change)="selectUnSelect(grnItem,discount,$event)"
+              [value]="isSelected(grnItem, discount)">{{discount.discountDetail}}</nb-checkbox>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <div class="form-inline" *ngIf="!itemDetail.itemIsSoledBatchWise">
+        <label for="SellingPrice" class="label form-control-label">Selling Price</label>
+        <input type="email" nbInput id="SellingPrice" [(ngModel)] = "sellingPrice">/{{itemDetail.itemPrice?.priceMeasuredUnit?.unitsCode}}
+      </div>
+
+      <div 
+      class="form-inline" 
+      *ngIf="!itemDetail.itemIsSoledBatchWise && itemDetail.itemDiscount && itemDetail.itemDiscount.length>0">
+        <div *ngFor ="let itemDiscount of itemDetail.itemDiscount">
+          <nb-checkbox id="discount-{{itemDiscount.discountId}}"
+          status="success"
+          (change)="selectUnSelectItemDiscount(itemDiscount)"
+          [value]="isSelectedItemDiscount(itemDiscount)">{{discount.discountDetail}}</nb-checkbox>
+        </div>
+      </div>  
+
+    <div class="form-inline">
+      <input type="number" nbInput placeholder="QTY" [(ngModel)]="qty" (ngModelChange)="QtyOrUnitChange()">
+      Selling Unit 
+      <nb-select [(selected)]="sellingUnit" (selectedChange)="QtyOrUnitChange()">
+        <nb-option [value]=undefined>Select</nb-option>
+        <nb-option *ngFor = "let unit of units" [value]="unit">{{unit.unitsCode}}</nb-option>
+      </nb-select>
+    </div>
+
+    </nb-card-body>
+    <nb-card-footer>
+      <button class="cancel" nbButton status="danger" (click)="cancel()">Cancel</button>
+      <button nbButton status="success" (click)="submit()">Submit</button>
+    </nb-card-footer>
+  </nb-card>

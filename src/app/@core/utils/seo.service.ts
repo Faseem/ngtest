@@ -1,4 +1,4 @@
-import { Injectable, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+/* import { Injectable, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { NavigationEnd, Router } from '@angular/router';
 import { NB_DOCUMENT } from '@nebular/theme';
@@ -56,3 +56,4 @@ export class SeoService implements OnDestroy {
     return this.dom.location.origin + this.dom.location.pathname;
   }
 }
+ */
